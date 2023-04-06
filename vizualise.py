@@ -12,7 +12,19 @@ dir_unstr = os.listdir("D:/cloudforge/files/transformed")
 os.chdir("D:/cloudforge/files/transformed")
 
 dfTweets = pd.read_csv("cleandTweets.csv")
+dfMaxDiff = pd.read_csv("DiffOCTSLA.csv")
 
+
+dfMaxDiff = dfMaxDiff.head(10)
+
+words = pd.concat([dfMaxDiff.set_index('Date'),dfTweets.set_index('Date')], axis=1, join='inner')
+
+words = words[['cleaned_content','Diff_OC','User']]
+print(words)
+
+print(dfMaxDiff)
+
+dfMaxDiff.to_json("Inference.json")
 
 # fig = px.line(dfTSLA, x='Date', y='High')
 # fig = px.line(dfTSLA, x='Date', y='Low')
